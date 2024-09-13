@@ -915,3 +915,64 @@ lv_roller_get_selected_str(roller, buf, sizeof(buf));
 
 
 
+#### 滑块
+
+
+
+功能：滑块部件常用于调节某个参数的值，它以直线滑动的形式来修改数值。
+
+
+
+滑块部件组成部分：
+
+-   主体：LV_PART_MAIN
+-   指示器：LV_PART_INDICATOR
+-   旋钮：LV_PART_KNOB
+
+
+
+
+
+知识点1：创建滑块部件 
+
+```C
+lv_obj_t   *slider = lv_slider_create( parent );
+```
+
+
+
+知识点2：设置大小、当前值、范围值
+
+```C
+lv_obj_set_size(slider, 20, 200);				/* 高度>宽度时，滑块为纵向 */
+lv_slider_set_value(slider, 50, LV_ANIM_OFF);				/* 设置当前值 */
+lv_slider_set_range(slider, -100, 100);					/* 设置范围值 */
+```
+
+
+
+知识点3：获取当前值
+
+```C
+lv_slider_get_value(slider);
+```
+
+
+
+知识点4：模式设置
+
+```
+lv_slider_set_mode(slider, LV_SLIDER_MODE_...);
+```
+
+
+
+知识点5：设置、获取左值
+
+```C
+lv_slider_set_left_value(slider, 20, LV_ANIM_OFF);			/* 设置左值 */
+lv_slider_get_left_value(slider);						/* 获取左值 */
+```
+
+
+
