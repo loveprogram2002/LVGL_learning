@@ -762,3 +762,87 @@ lv_list_get_btn_text( list, list_btn );
 
 
 
+
+
+
+
+#### 下拉列表
+
+
+
+功能：下拉列表部件常用于多选一的场景，点击后可展现多个选项。
+
+组成:
+
+-   按钮：BUTTON
+-   列表：LIST
+
+<img src="E:\Note_Xmind\LVGL\Zhengdian\PC_Learn\LVGL_PC\image-20240913085454262.png" alt="image-20240913085454262" style="zoom: 50%;" />
+
+
+
+
+
+知识点1：创建下拉列表
+
+```c
+lv_obj_t   *dd = lv_dropdown_create( parent );
+```
+
+
+
+知识点2：设置选项内容
+
+```c
+/* 设置选项 */
+lv_dropdown_set_options( dd, "a\nb\nc\nd");	   		
+/* 设置选项 （静态）*/
+lv_dropdown_set_options_static( dd, "a\nb\nc\nd ");		
+/* 添加选项，索引从0开始 */
+lv_dropdown_add_option( dd, "e", 4);					
+```
+
+解析第二个函数
+
+ `lv_dropdown_set_options_static()` 函数的作用是为指定的下拉列表控件设置一组静态的选项。这些选项在下拉列表创建后不会改变，除非你再次调用此函数来更新它们。
+
+使用 `lv_dropdown_set_options_static()` 函数适用于以下场景：
+
+-   当下拉列表的选项在程序运行期间是固定不变的，例如，一个包含预定义设置选项的配置菜单。
+-   你希望下拉列表的选项在程序启动时就完全确定，并且在程序运行期间不需要动态添加或删除选项。
+-   这对于创建具有固定选项的下拉菜单非常有用，可以简化界面设计并减少运行时的资源消耗。
+
+
+
+
+
+知识点3：设置当前所选项
+
+```c
+lv_dropdown_set_selected( dd, 1);					/* 注意：索引从0开始 */
+```
+
+
+
+知识点4：获取选项内容
+
+```c
+lv_dropdown_get_selected( dd);		/* 获取索引 */
+
+char buf[10];
+lv_dropdown_get_selected_str( dd, buf, sizeof(buf));	/* 获取选项文本 */
+```
+
+
+
+知识点5：设置方向和图标
+
+```c
+lv_dropdown_set_dir(dd, LV_DIR_RIGHT);				/* 设置列表展开方向 */
+lv_dropdown_set_symbol(dd, LV_SYMBOL_RIGHT);			/* 设置图标 */
+```
+
+
+
+
+
