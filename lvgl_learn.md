@@ -846,3 +846,72 @@ lv_dropdown_set_symbol(dd, LV_SYMBOL_RIGHT);			/* 设置图标 */
 
 
 
+####  滚轮
+
+
+
+功能：滚轮部件常用于多选一的场景，它以滚轮的形式来展现多个选项。
+
+滚轮组成部分：
+
+-   主体：LV_PART_MAIN
+-   选项框：LV_PART_SELECTED
+
+
+
+
+
+知识点1：创建滚轮部件 
+
+```c
+lv_obj_t   *roller= lv_roller_create( parent );
+```
+
+
+
+知识点2：设置选项间隔
+
+```c
+lv_obj_set_style_text_line_space(roller, 30, LV_STATE_DEFAULT);	   
+```
+
+
+
+知识点3：设置选项内容、滚动模式
+
+```c
+/* 正常模式 */
+lv_roller_set_options(roller, “a\nb\nc\nd”, LV_ROLLER_MODE_NORMAL); 
+// 无限循环模式：占用内存较大
+lv_roller_set_options(roller, "a\nb\nc\nd", LV_ROLLER_MODE_INFINITE);
+```
+
+
+
+知识点4：设置当前所选项
+
+```c
+lv_roller_set_selected(roller, 3, LV_ANIM_ON);
+```
+
+
+
+知识点5：设置可见行数
+
+```c
+lv_roller_set_visible_row_count(roller, 2);
+```
+
+
+
+知识点6：获取选项内容
+
+```c
+lv_roller_get_selected(roller);					/* 获取索引 */
+char buf[10];
+/* 获取选项文本 */
+lv_roller_get_selected_str(roller, buf, sizeof(buf));		
+```
+
+
+
