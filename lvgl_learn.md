@@ -1068,3 +1068,53 @@ lv_arc_set_change_rate(arc, 90);					/* 绘制速率：90°/秒 */
 
 
 
+#### 线条
+
+
+
+功能：线条部件能够在一组坐标点之间依次绘制直线。
+
+
+
+组成部分：主体（LV_PART_MAIN）
+
+
+
+知识点1：创建线条部件 
+
+```c
+// 注意仅使用该函数则默认没有任何显示
+lv_obj_t   *line = lv_line_create( parent );
+```
+
+
+
+知识点2：设置线条坐标点
+
+```c
+static lv_point_t  line_points[] = { {15, 5}, {25, 20}, {5, 20}, {15, 5} };
+lv_line_set_points(line, line_points, 4);	
+```
+
+
+
+知识点3：设置线条样式
+
+```c
+lv_obj_set_style_line_width(line, 8, LV_PART_MAIN);   /* 设置宽度 */
+lv_obj_set_style_line_rounded(line, true, LV_PART_MAIN); /* 设置圆角 */
+```
+
+
+
+知识点4：设置y轴反转
+
+```c
+lv_line_set_y_invert(line, true);
+```
+
+
+
+
+
+如何使用线条部件绘制曲线？关键在于获取曲线的坐标。
