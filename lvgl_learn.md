@@ -980,6 +980,18 @@ lv_slider_get_left_value(slider);						/* 获取左值 */
 
 
 
+移除滑块的旋钮
+
+```c
+lv_obj_remove_style(slider, NULL, LV_PART_KNOB);
+```
+
+
+
+
+
+
+
 ####  圆弧
 
 
@@ -1118,3 +1130,83 @@ lv_line_set_y_invert(line, true);
 
 
 如何使用线条部件绘制曲线？关键在于获取曲线的坐标。
+
+
+
+#### 图片
+
+
+
+默认情况下，都是中心点进行旋转和缩放的。
+
+对于lv_img_set_pivot()函数来说，中心点是相对于原照片来说的。
+
+
+
+功能：图片部件可用于图片显示、功能界面优化、背景优化等。
+
+图片部件组成部分：主体(LV_PART_MAIN)
+
+
+
+知识点1：创建图片部件 
+
+```c
+lv_obj_t  *img = lv_img_create( parent );
+```
+
+
+
+知识点2：设置图片源
+
+```c
+LV_IMG_DECLARE(img_bird);			/* 声明图片 */
+lv_img_set_src(img, &img_bird);		/* 设置图片源 */
+```
+
+
+
+知识点3：设置图片偏移
+
+```c
+// 多出来的地方回到左侧
+lv_img_set_offset_x(img, 100);	/* x轴偏移100 */
+// 多出来的地方回到右侧
+lv_img_set_offset_y(img, 20); 	/* y轴偏移20 */
+```
+
+
+
+知识点4：图片重新着色
+
+能对图片的整体进行着色， 但不能对部件的某个部分进行着色。
+
+首先设置透明度，然后再着色。
+
+```c
+lv_obj_set_style_img_recolor(img, lv_color_hex(0xffe1d2),LV_PART_MAIN); 
+lv_obj_set_style_img_recolor_opa(img, 150, LV_PART_MAIN);
+```
+
+
+
+知识点5：设置图片缩放、旋转
+
+```c
+lv_img_set_zoom(img, 512);	/* 放大2倍 */
+lv_img_set_angle(img, 900);	/* 顺时针方向旋转90° */
+```
+
+
+
+知识点6：设置中心点
+
+```c
+lv_obj_update_layout(img);	/* 更新图片布局信息 */
+lv_img_set_pivot(img, 0, 0);	/* 设置中心点 */
+```
+
+
+
+
+
