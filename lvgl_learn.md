@@ -1210,3 +1210,196 @@ lv_img_set_pivot(img, 0, 0);	/* 设置中心点 */
 
 
 
+####  色环
+
+
+
+功能：在UI设计中，色环部件一般用作颜色选择器。
+
+
+
+组成：
+
+-   主体：LV_PART_MAIN
+-   旋钮：LV_PART_KNOB
+
+
+
+知识点1：创建色环部件 
+
+
+
+```C
+lv_obj_t  *cw = lv_colorwheel_create( parent, knob_recolor );
+```
+
+
+
+知识点2：设置当前选中颜色
+
+```C
+lv_colorwheel_set_rgb(cw, lv_color_hex(0xff0000));
+```
+
+
+
+知识点3：获取当前选中颜色
+
+```C
+lv_colorwheel_get_rgb(cw);
+```
+
+
+
+
+
+知识点4：设置色环模式
+
+```
+lv_colorwheel_set_mode(cw, LV_COLORWHEEL_MODE_HUE/SATURATION/VALUE);	
+/* 色相、饱和度、明度 */
+lv_colorwheel_set_mode_fixed(cw, true);				
+/* 固定色环模式 */
+
+```
+
+
+
+
+
+设置圆角
+
+```
+void lv_obj_set_style_radius(struct _lv_obj_t * obj, 
+lv_coord_t value, lv_style_selector_t selector);
+// 该函数用来设置圆角第二参数表示圆角值
+
+```
+
+
+
+
+
+#### 按钮矩阵
+
+
+
+功能：按钮矩阵部件可以在不同的行和列中显示多个轻量级按钮。
+
+组成：
+
+-   主体(LV_PART_MAIN）
+-   按钮(LV_PART_ITEMS)
+
+
+
+
+
+知识点1：创建按钮矩阵部件 
+
+```c
+lv_obj_t  *btnm = lv_btnmatrix_create(parent);
+```
+
+
+
+
+
+知识点2：设置按钮数量、文本
+
+```c
+/* 定义按钮数组，最后一个元素必须为空 */
+static const char *map[] = { "btn1", "\n", "btn2", "btn3", "" };
+/* 设置按钮 */
+lv_btnmatrix_set_map(btnm, map);	    
+```
+
+如果需要让按钮换行，可以在字符串数组中使用换行符“\n”。注意：换行符必须独立成一个字符即换行符前面以及后面不可以有字符。
+
+
+
+
+
+
+
+知识点3：设置按钮相对宽度
+
+```c
+/* 索引 (id) 从0开始，宽度1~7 ( 默认为1 ) */
+lv_btnmatrix_set_btn_width(btnm, id, width);
+```
+
+注意：在按钮矩阵部件中，按钮只能设置相对宽度。
+
+
+
+
+
+知识点4：获取按钮索引、文本
+
+```c
+lv_btnmatrix_get_selected_btn(btnm);		/* 获取索引 */
+lv_btnmatrix_get_btn_text(btnm, id);		/* 获取文本 */
+```
+
+索引就相当于一个 ID，在按钮矩阵部件中，每一个按钮都有对应的索引。索引从零开始。
+
+
+
+
+
+知识点5：设置、清除按钮属性
+
+```c
+/* 设置单个按钮属性 */
+lv_btnmatrix_set_btn_ctrl(btnm, id, LV_BTNMATRIX_CTRL_...);	
+/* 清除单个按钮属性 */
+lv_btnmatrix_clear_btn_ctrl(btnm, id, LV_BTNMATRIX_CTRL_...); 
+/* 设置所有按钮属性 */
+lv_btnmatrix_set_btn_ctrl_all(btnm, LV_BTNMATRIX_CTRL_...);	 
+enum {
+    LV_BTNMATRIX_CTRL_HIDDEN, 						/* 隐藏 */
+    LV_BTNMATRIX_CTRL_DISABLED,						/* 失能 */
+    LV_BTNMATRIX_CTRL_CHECKABLE, 					/* 允许状态切换 */
+    LV_BTNMATRIX_CTRL_RECOLOR, 						/* 允许文本重新着色 */
+};
+```
+
+​        对于 LV_BTNMATRIX_CTRL_CHECKABLE，若不设置这个属性值，在默认的情况下，按了某个按钮并释放掉后这个按钮就恢复为没按下的状态。若设置了这个值，则点击某个按钮并释放后，按钮的状态保持不变而且其他按钮不能保持状态。
+
+按钮的文本默认是黑色的。
+
+
+
+
+
+
+
+知识点6：设置单次选中属性
+
+按钮互斥：按钮互斥是指：在某一时刻，只允许有一个按钮处于按下不弹起状态（被选中），当我们
+选中一个按钮之后，其他的按钮将会自动清除选中属性。
+
+ 通俗说法：一旦有某个按钮被选中后，那么其他按钮都会变成未选中的状态。每次点击中，只有一个按钮被选中，其他按钮都变成未选中状态。
+
+注意：要设置单次选中属性，需要先给按钮设置允许状态切换属性。 
+
+```c
+lv_btnmatrix_set_one_checked(btnm, true);// 开启按钮互斥
+```
+
+
+
+第48个视频：例程讲解
+
+移除滚动条
+
+```c
+lv_obj_remove_style(obj_input, NULL, LV_PART_SCROLLBAR);
+```
+
+
+
+按钮矩阵部件的事件
+① LV_EVENT_VALUE_CHANGED：当一个按钮被按下、释放或长按时发送。
+② LV_EVENT_DRAW_PART_BEGIN：开始绘制按钮。
